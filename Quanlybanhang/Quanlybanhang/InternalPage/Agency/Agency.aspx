@@ -48,5 +48,5 @@
         </ItemTemplate>        
     </asp:Repeater>
 </table>
-
+    <asp:PlaceHolder ID="PagingPlaceHolder" runat="server"></asp:PlaceHolder>     
 </asp:Content>

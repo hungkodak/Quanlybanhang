@@ -192,6 +192,7 @@
       <DependentUpon>Agency.aspx</DependentUpon>
     </Compile>
     <Compile Include="Scripts\Source\Components\AgencyComponent.cs" />
+    <Compile Include="Scripts\Source\Components\IDataComponent.cs" />
     <Compile Include="Scripts\Source\Components\UserComponent.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -225,6 +226,7 @@
     <Compile Include="Scripts\Source\Defination\AgencyRole.cs" />
     <Compile Include="Scripts\Source\Utils\DateTimeExtension.cs" />
     <Compile Include="Scripts\Source\Utils\MessageHelper.cs" />
+    <Compile Include="Scripts\Source\Utils\PagingHelper.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

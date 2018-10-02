@@ -34,12 +34,32 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
         }
 
-        static public List<AgencyContract> GetAgencyList(bool isLimit,)
+        static public bool UpdateAgency(AgencyContract agency)
         {
             try
             {
                 _conObj.Open();
-                string sql = "SELECT * FROM agency order by lastupdate";
+                string sql = "UPDATE agency SET name = '"+ agency.AgencyName + "', type = " + (int)agency.Role + ", lastupdate = '" + DateTime.UtcNow.ToMySQLDateTimeString() + "' WHERE ID =" + agency.ID;
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("AgencyServices:UpdateAgency", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
+
+        static public List<AgencyContract> GetAgencyList(int offset, int numrow)
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "SELECT * FROM agency limit " + offset + "," + numrow;
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 List<AgencyContract> agencyList = new List<AgencyContract>();
@@ -62,6 +82,33 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             catch (MySqlException ex)
             {
                 throw new Exception("AgencyServices:GetAgencyList", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
+
+        static public int GetCountTotalAgency()
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "SELECT Count(*) FROM agency";
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                MySqlDataReader reader = cmd.ExecuteReader();                
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    return Int32.Parse(reader[0].ToString());                    
+                }
+
+                return 0;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("AgencyServices:GetCountTotalAgency", ex);
             }
             finally
             {
