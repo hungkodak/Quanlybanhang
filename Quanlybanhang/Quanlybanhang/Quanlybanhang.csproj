@@ -138,6 +138,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="InternalPage\Product\Products.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="InternalPage\Agency\Agency.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -190,6 +191,13 @@
     </Compile>
     <Compile Include="InternalPage\Agency\Agency.aspx.designer.cs">
       <DependentUpon>Agency.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InternalPage\Product\Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InternalPage\Product\Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
     </Compile>
     <Compile Include="Scripts\Source\Components\ProductsComponent.cs" />
     <Compile Include="Scripts\Source\Components\AgencyComponent.cs" />
