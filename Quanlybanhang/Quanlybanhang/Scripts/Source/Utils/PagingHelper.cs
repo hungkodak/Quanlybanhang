@@ -16,13 +16,15 @@ namespace Quanlybanhang.Scripts.Source.Utils
         protected PlaceHolder _placeHolder;
         protected IDataComponent _dataComponent;
         protected Repeater _repeater;
-        
-        public PagingHelper(Control controllPage, PlaceHolder placeholder, IDataComponent data, Repeater rpt)
+        protected Action<int> _setCurrentPageFnc;
+
+        public PagingHelper(PlaceHolder placeholder, IDataComponent data, Repeater rpt, int currentPage, Action<int> setCurrentPageFnc)
         {
             _placeHolder = placeholder;
             _dataComponent = data;
             _repeater = rpt;
-            //if(controllPage.ViewStateMode)
+            _currentPage = currentPage;
+            _setCurrentPageFnc = setCurrentPageFnc;
         }
 
         public void FetchData()
@@ -104,7 +106,7 @@ namespace Quanlybanhang.Scripts.Source.Utils
         {
             LinkButton lnk = sender as LinkButton;
             _currentPage = int.Parse(lnk.Text);
-
+            _setCurrentPageFnc(_currentPage);
             FetchData();
             CreatePagingControl();
         }
@@ -113,7 +115,7 @@ namespace Quanlybanhang.Scripts.Source.Utils
         {
             LinkButton lnk = sender as LinkButton;
             _currentPage = _currentPage + 1;
-
+            _setCurrentPageFnc(_currentPage);
             FetchData();
             CreatePagingControl();
         }
@@ -122,7 +124,7 @@ namespace Quanlybanhang.Scripts.Source.Utils
         {
             LinkButton lnk = sender as LinkButton;
             _currentPage = _currentPage - 1;
-
+            _setCurrentPageFnc(_currentPage);
             FetchData();
             CreatePagingControl();
         }

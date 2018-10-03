@@ -12,41 +12,62 @@ using System.Web.UI.WebControls;
 
 namespace Quanlybanhang.InternalPage.Agency
 {
-    public partial class Agency : System.Web.UI.Page
+    public partial class Agency : Page
     {
         protected AgencyComponent _agencyComponent = new AgencyComponent();
-        protected List<ListItem> _agencyRoleList = new List<ListItem>();
+        protected List<AgencyRoleContract> _agencyRoleList
+        {
+            get
+            {
+                if(ViewState["_agencyRoleList"] == null)
+                {
+                    List<AgencyRoleContract> list = new List<AgencyRoleContract>();
+                    int[] itemValues = (int[])Enum.GetValues(typeof(AgencyRole));
+                    string[] itemNames = Enum.GetNames(typeof(AgencyRole));
+                    for (int i = 0; i <= itemNames.Length - 1; i++)
+                    {
+                        AgencyRoleContract item = new AgencyRoleContract()
+                        {
+                            Name =  itemNames[i],
+                            Value = itemValues[i]
+                        };
+                        list.Add(item);
+                    }
+                    ViewState["_agencyRoleList"] = list;
+                }
+                return ((List<AgencyRoleContract>)ViewState["_agencyRoleList"]);
+            }
+        }
         protected PagingHelper _pagingHelper;
+        public int CurrentPage
+        {
+            get
+            {
+                object obj = ViewState["CurrentPage"];
+                return (obj == null) ? 1 : (int)obj;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
+        }
+
+        public void SetCurrentPage(int page)
+        {
+            CurrentPage = page;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            _pagingHelper = new PagingHelper(this, PagingPlaceHolder, _agencyComponent, AgencyRepeater);
+            _pagingHelper = new PagingHelper(PagingPlaceHolder, _agencyComponent, AgencyRepeater, CurrentPage, SetCurrentPage);
             if (!IsPostBack)
-            {
-                int[] itemValues = (int[])Enum.GetValues(typeof(AgencyRole));
-                string[] itemNames = Enum.GetNames(typeof(AgencyRole));
-
-                for (int i = 0; i <= itemNames.Length - 1; i++)
-                {
-                    ListItem item = new ListItem(itemNames[i], itemValues[i].ToString());
-                    _agencyRoleList.Add(item);
-                }
-                Session["_agencyRoleList"] = _agencyRoleList;
+            {   
                 agencyType.DataSource = _agencyRoleList;
+                agencyType.DataTextField = "Name";
+                agencyType.DataValueField = "Value";
                 agencyType.DataBind();
-                _pagingHelper.FetchData();
-                this.ViewState["s"];
-
-                //Session["_pagingHelper"] = _pagingHelper;
-            }
-            else
-            {
-                _agencyRoleList = (List<ListItem>)Session["_agencyRoleList"];
-                //_pagingHelper = (PagingHelper)Session["_pagingHelper"];
-                //_pagingHelper.FetchData();
-                //_pagingHelper.CreatePagingControl();
-            }
-            
-            
+                _pagingHelper.FetchData();             
+            }            
             _pagingHelper.CreatePagingControl();
 
         }
@@ -57,6 +78,8 @@ namespace Quanlybanhang.InternalPage.Agency
             if (agencyDropDownList != null)
             {
                 agencyDropDownList.DataSource = _agencyRoleList;
+                agencyDropDownList.DataTextField = "Name";
+                agencyDropDownList.DataValueField = "Value";
                 agencyDropDownList.DataBind();
                 agencyDropDownList.SelectedIndex = (int)((AgencyContract)e.Item.DataItem).Role;
             }            
@@ -114,6 +137,8 @@ namespace Quanlybanhang.InternalPage.Agency
                 if (_agencyComponent.CreateAgency(txtAgencyName.Text.ToString(), (AgencyRole)Int32.Parse(agencyType.SelectedValue)))
                 {
                     MessageHelper.ShowSucessMessage("Create Agency " + txtAgencyName.Text + "sucessfull");
+                    _pagingHelper.FetchData();
+                    _pagingHelper.CreatePagingControl();
                 }
                 else
                 {

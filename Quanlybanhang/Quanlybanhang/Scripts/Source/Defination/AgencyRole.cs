@@ -10,4 +10,11 @@ namespace Quanlybanhang.Scripts.Source.Defination
         Import = 0,
         Export = 1
     }
+
+    [Serializable]
+    public class AgencyRoleContract
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+    }
 }

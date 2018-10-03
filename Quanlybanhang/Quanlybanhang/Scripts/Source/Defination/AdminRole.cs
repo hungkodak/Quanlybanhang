@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace Quanlybanhang.Scripts.Source.Defination
 {
@@ -10,5 +11,6 @@ namespace Quanlybanhang.Scripts.Source.Defination
         None = 0,
         Admin = 1,
         Seller = 2
-    }    
+    }
+    
 }

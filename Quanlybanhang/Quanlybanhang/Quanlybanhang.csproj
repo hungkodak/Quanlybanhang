@@ -191,6 +191,7 @@
     <Compile Include="InternalPage\Agency\Agency.aspx.designer.cs">
       <DependentUpon>Agency.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Source\Components\ProductsComponent.cs" />
     <Compile Include="Scripts\Source\Components\AgencyComponent.cs" />
     <Compile Include="Scripts\Source\Components\IDataComponent.cs" />
     <Compile Include="Scripts\Source\Components\UserComponent.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Source\DBServices\ProductsServices.cs" />
     <Compile Include="Scripts\Source\DBServices\AgencyServices.cs" />
     <Compile Include="Scripts\Source\DBServices\Core\SQLQueryHelper.cs" />
     <Compile Include="Scripts\Source\Defination\AdminRole.cs" />
