@@ -234,6 +234,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Source\Defination\AgencyRole.cs" />
+    <Compile Include="Scripts\Source\Defination\ProductSize.cs" />
     <Compile Include="Scripts\Source\Utils\DateTimeExtension.cs" />
     <Compile Include="Scripts\Source\Utils\MessageHelper.cs" />
     <Compile Include="Scripts\Source\Utils\PagingHelper.cs" />
