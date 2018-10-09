@@ -222,3 +222,4 @@ D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\Antlr3.Runtime.pdb
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\Microsoft.AspNet.FriendlyUrls.xml
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csproj.CopyComplete
+D:\hungkodak\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csprojAssemblyReference.cache

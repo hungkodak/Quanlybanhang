@@ -24,7 +24,7 @@ namespace Quanlybanhang.Utils
         }
 
         //-----------------------------------------
-        static Boolean isNumber(string a)
+        public static Boolean isNumber(string a)
         {
             foreach (Char c in a)
             {
@@ -36,7 +36,7 @@ namespace Quanlybanhang.Utils
         }
 
         //-----------------------------------------
-        static Boolean isNumberfloat(string a)
+        public static Boolean isNumberfloat(string a)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Quanlybanhang.Utils
         }
 
         //-----------------------------------------
-        static Boolean isAboveZero(string a)
+        public static Boolean isAboveZero(string a)
         {
             if (float.Parse(a) > 0)
             {
@@ -63,11 +63,10 @@ namespace Quanlybanhang.Utils
         }
 
         //-----------------------------------------
-        public static Boolean checkName(PlaceHolder plh, string a)
+        public static Boolean checkName(string a)
         {
             if (isBlank(a))
-            {
-                showErrorMessage(plh, "Tên hàng không được để trống");
+            {                
                 return false;
             }
             else
@@ -77,7 +76,7 @@ namespace Quanlybanhang.Utils
         }
 
         //-----------------------------------------
-        public static Boolean checkQuantity(PlaceHolder plh, string a)
+        public static Boolean checkQuantity(string a)
         {
             if (isNumber(a) && !isBlank(a))
             {
@@ -86,20 +85,18 @@ namespace Quanlybanhang.Utils
                     return true;
                 }
                 else
-                {
-                    showErrorMessage(plh, "Số lượng nhập vào phải lớn hơn 0");
+                {                    
                     return false;
                 }
             }
             else
-            {
-                showErrorMessage(plh, "Số lượng nhập vào phải là số và lớn hơn 0");
+            {                
                 return false;
             }
         }
 
         //-----------------------------------------
-        public static Boolean checkQuantityfloat(PlaceHolder plh, string a)
+        public static Boolean checkQuantityfloat(string a)
         {
             if (isNumberfloat(a) && !isBlank(a))
             {
@@ -108,14 +105,12 @@ namespace Quanlybanhang.Utils
                     return true;
                 }
                 else
-                {
-                    showErrorMessage(plh, "Số lượng nhập vào phải lớn hơn 0");
+                {                    
                     return false;
                 }
             }
             else
-            {
-                showErrorMessage(plh, "Số lượng nhập vào phải là số và lớn hơn 0");
+            {                
                 return false;
             }
         }

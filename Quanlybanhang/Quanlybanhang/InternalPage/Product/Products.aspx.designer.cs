@@ -31,49 +31,40 @@ namespace Quanlybanhang.InternalPage.Product {
         protected global::System.Web.UI.WebControls.TextBox txtProductName;
         
         /// <summary>
-        /// TextBox1 control.
+        /// txtImportPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtImportPrice;
         
         /// <summary>
-        /// TextBox2 control.
+        /// txtExportPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox txtExportPrice;
         
         /// <summary>
-        /// agencyType control.
+        /// btnAdded control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList agencyType;
+        protected global::System.Web.UI.WebControls.Button btnAdded;
         
         /// <summary>
-        /// btnlogin control.
+        /// ProductRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnlogin;
-        
-        /// <summary>
-        /// AgencyRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater AgencyRepeater;
+        protected global::System.Web.UI.WebControls.Repeater ProductRepeater;
         
         /// <summary>
         /// PagingPlaceHolder control.

@@ -18,17 +18,26 @@ namespace Quanlybanhang
 
         protected void btnlogin_Click(object sender, EventArgs e)
         {
-            if (ValidatorHelper.checkName(PlaceHolder1, txtusername.Text.ToString()) && ValidatorHelper.checkName(PlaceHolder1, txtpassword.Text.ToString()))
+            if (ValidatorHelper.isBlank(txtusername.Text.ToString()))
             {
-                if (UserComponent.Login(this, txtusername.Text.ToString(), txtpassword.Text.ToString()))
-                {
-                    Response.Redirect("default.aspx");
-                }
-                else
-                {
-                    ValidatorHelper.showErrorMessage(PlaceHolder1, "Tài khoản hoặc mật khẩu không chính xác");
-                }
+                ValidatorHelper.showErrorMessage(PlaceHolder1,"Username can not be blank");
+                return;
             }
+
+            if (ValidatorHelper.isBlank(txtpassword.Text.ToString()))
+            {
+                ValidatorHelper.showErrorMessage(PlaceHolder1, "Password can not be blank");
+                return;
+            }
+
+            if (UserComponent.Login(this, txtusername.Text.ToString(), txtpassword.Text.ToString()))
+            {
+                Response.Redirect("default.aspx");
+            }
+            else
+            {
+                ValidatorHelper.showErrorMessage(PlaceHolder1, "Tài khoản hoặc mật khẩu không chính xác");
+            }            
         }
     }
 }
