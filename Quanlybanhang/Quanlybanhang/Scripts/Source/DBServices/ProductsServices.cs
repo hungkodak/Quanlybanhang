@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using MySql.Data.MySqlClient;
+using ProtoBuf;
 using Quanlybanhang.Scripts.Source.Defination;
 using Quanlybanhang.Scripts.Source.Utils;
 
@@ -75,10 +76,45 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                             ExportPrice = Int32.Parse(reader[2].ToString()),
                             ImportPrice = Int32.Parse(reader[3].ToString())
                         };
+                        //Serializer.Serialize
                         productList.Add(product);
                     }
                 }
                 return productList;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("ProductsServices:GetProductList", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
+
+        static public ProductContract GetProduct(string productId)
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "SELECT * FROM products where ID='" + productId + "'";
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<ProductContract> productList = new List<ProductContract>();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    ProductContract product = new ProductContract()
+                    {
+                        ID = reader[0].ToString(),
+                        Name = reader[1].ToString(),
+                        ExportPrice = Int32.Parse(reader[2].ToString()),
+                        ImportPrice = Int32.Parse(reader[3].ToString())
+                    };
+                    return product;
+                }
+                return null;
             }
             catch (MySqlException ex)
             {
@@ -118,11 +154,19 @@ namespace Quanlybanhang.Scripts.Source.DBServices
         }
     }
 
+    [ProtoContract]
     public class ProductContract
     {
+        [ProtoMember(1)]
         public string ID { get; set; }
-        public string Name { get; set; }        
+
+        [ProtoMember(2)]
+        public string Name { get; set; }
+
+        [ProtoMember(3)]
         public int ExportPrice { get; set; }
+
+        [ProtoMember(4)]
         public int ImportPrice { get; set; }
 
         public ProductContract()

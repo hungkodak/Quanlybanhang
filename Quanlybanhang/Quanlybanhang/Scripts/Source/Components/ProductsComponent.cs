@@ -27,6 +27,17 @@ namespace Quanlybanhang.Scripts.Source.Components
             return false;
         }
 
+        public bool IsProductExist(string productId)
+        {
+            ProductContract product = ProductsServices.GetProduct(productId);
+                        
+            if (product != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool UpdateProduct(string id, string name, int exportprice, int importprice)
         {
             ProductContract product = new ProductContract()

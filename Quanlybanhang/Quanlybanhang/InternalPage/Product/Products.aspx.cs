@@ -49,6 +49,12 @@ namespace Quanlybanhang.InternalPage.Product
                 MessageHelper.ShowErrorMessage("Product ID must have 4 unique character.");
                 return;
             }
+
+            if(_productComponent.IsProductExist(txtProductID.Text))
+            {
+                MessageHelper.ShowErrorMessage("Product ID must be unique.");
+            }
+
             if(ValidatorHelper.isBlank(txtProductName.Text))
             {
                 MessageHelper.ShowErrorMessage("Product Name can not be blank.");
@@ -69,7 +75,7 @@ namespace Quanlybanhang.InternalPage.Product
 
             if (_productComponent.CreateProduct(txtProductID.Text, txtProductName.Text, Int32.Parse(txtExportPrice.Text), Int32.Parse(txtImportPrice.Text)))
             {
-                MessageHelper.ShowSucessMessage("Create Product " + txtProductID.Text + "sucessfull");
+                MessageHelper.ShowSucessMessage("Create Product " + txtProductID.Text + " sucessfull");
                 _pagingHelper.FetchData();
                 _pagingHelper.CreatePagingControl();
             }
