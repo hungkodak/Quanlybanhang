@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using MySql.Data.MySqlClient;
@@ -76,7 +77,15 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                             ExportPrice = Int32.Parse(reader[2].ToString()),
                             ImportPrice = Int32.Parse(reader[3].ToString())
                         };
-                        //Serializer.Serialize
+                        //using (MemoryStream memoryStream = new MemoryStream())
+                        //{
+                        //    Serializer.Serialize(memoryStream, product);
+                        //    //byte[] raw = memoryStream.ToArray();
+                        //    memoryStream.Position = 0;
+                        //    ProductContract clone = Serializer.Deserialize<ProductContract>(memoryStream);
+                        //    //string temp = memoryStream.ToString();
+                        //}
+                        
                         productList.Add(product);
                     }
                 }

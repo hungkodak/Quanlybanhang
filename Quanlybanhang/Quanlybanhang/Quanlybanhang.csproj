@@ -226,6 +226,7 @@
     <Compile Include="Scripts\Source\DBServices\ProductsServices.cs" />
     <Compile Include="Scripts\Source\DBServices\AgencyServices.cs" />
     <Compile Include="Scripts\Source\DBServices\Core\SQLQueryHelper.cs" />
+    <Compile Include="Scripts\Source\DBServices\StoreTransactionServices.cs" />
     <Compile Include="Scripts\Source\Defination\AdminRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

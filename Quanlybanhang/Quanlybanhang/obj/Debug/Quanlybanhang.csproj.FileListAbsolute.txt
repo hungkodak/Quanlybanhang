@@ -223,3 +223,5 @@ D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\Microsoft.AspNet.Frien
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csproj.CopyComplete
 D:\hungkodak\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csprojAssemblyReference.cache
+D:\hungkodak\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\protobuf-net.dll
+D:\hungkodak\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\protobuf-net.xml
