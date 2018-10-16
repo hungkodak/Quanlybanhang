@@ -53,6 +53,7 @@ namespace Quanlybanhang.InternalPage.Product
             if(_productComponent.IsProductExist(txtProductID.Text))
             {
                 MessageHelper.ShowErrorMessage("Product ID must be unique.");
+                return;
             }
 
             if(ValidatorHelper.isBlank(txtProductName.Text))

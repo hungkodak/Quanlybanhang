@@ -3,7 +3,7 @@ use store;
 create table agency (ID int NOT NULL AUTO_INCREMENT, 					
                     name Varchar(50), 
                     type int,
-                    lastupdate Datetime,PRIMARY KEY (ID));
+                    lastupdate long,PRIMARY KEY (ID));
                     
                     
 

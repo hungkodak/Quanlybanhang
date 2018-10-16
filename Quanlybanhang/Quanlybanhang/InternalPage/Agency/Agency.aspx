@@ -40,9 +40,9 @@
               <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("ID") %>' /></th>
               <td><asp:TextBox ID="txtAgencyNameRpt" runat="server" Text='<%#Eval("AgencyName") %>' Enabled="false"></asp:TextBox></td>
               <td><asp:DropDownList ID="agencyTypeRpt" runat="server" Enabled="false" ></asp:DropDownList></td>
-              <td><asp:Button ID="btnEdit" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>
-                  <asp:Button ID="btnUpdate" CommandName="update" Visible="false" runat="server" Text="Update"></asp:Button>
-                  <asp:Button ID="btnCancel" CommandName="cancel" Visible="false" runat="server" Text="Cancel"></asp:Button>
+              <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>
+                  <asp:Button ID="btnUpdate" class="btn btn-primary" CommandName="update" Visible="false" runat="server" Text="Update"></asp:Button>
+                  <asp:Button ID="btnCancel" class="btn btn-primary" CommandName="cancel" Visible="false" runat="server" Text="Cancel"></asp:Button>
               </td>
             </tr>
         </ItemTemplate>        

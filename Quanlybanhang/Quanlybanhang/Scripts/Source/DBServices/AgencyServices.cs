@@ -18,8 +18,8 @@ namespace Quanlybanhang.Scripts.Source.DBServices
         {
             try
             {
-                _conObj.Open();                
-                string sql = "INSERT INTO agency(name, type, lastupdate) VALUES('" + agency.AgencyName + "', " + (int)agency.Role + ", '" + DateTime.UtcNow.ToMySQLDateTimeString() + "')";
+                _conObj.Open();
+                string sql = "INSERT INTO agency(name, type, lastupdate) VALUES('" + agency.AgencyName + "', " + (int)agency.Role + ", '" + DateTime.UtcNow.ToUnixTime() + "')";
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 cmd.ExecuteNonQuery();
                 return true;
@@ -39,7 +39,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             try
             {
                 _conObj.Open();
-                string sql = "UPDATE agency SET name = '"+ agency.AgencyName + "', type = " + (int)agency.Role + ", lastupdate = '" + DateTime.UtcNow.ToMySQLDateTimeString() + "' WHERE ID =" + agency.ID;
+                string sql = "UPDATE agency SET name = '" + agency.AgencyName + "', type = " + (int)agency.Role + ", lastupdate = '" + DateTime.UtcNow.ToUnixTime() + "' WHERE ID =" + agency.ID;
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 cmd.ExecuteNonQuery();
                 return true;

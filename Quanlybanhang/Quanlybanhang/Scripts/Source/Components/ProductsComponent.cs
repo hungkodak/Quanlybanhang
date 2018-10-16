@@ -38,6 +38,17 @@ namespace Quanlybanhang.Scripts.Source.Components
             return false;
         }
 
+        public ProductContract GetProduct(string productId)
+        {
+            ProductContract product = ProductsServices.GetProduct(productId);
+
+            if (product != null)
+            {
+                return product;
+            }
+            return null;
+        }
+
         public bool UpdateProduct(string id, string name, int exportprice, int importprice)
         {
             ProductContract product = new ProductContract()

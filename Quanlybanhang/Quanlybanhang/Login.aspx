@@ -15,7 +15,7 @@
             <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>        
     </div>
     <form class="form-signin" runat="server">
-      <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <img class="mb-4" src="Images/logo.jpg" alt="" width="256" height="256">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="txtusername" class="sr-only">Username</label>
       <asp:TextBox ID="txtusername" class="form-control" runat="server" placeholder="User Name" required autofocus></asp:TextBox>

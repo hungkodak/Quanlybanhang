@@ -61,13 +61,13 @@ namespace Quanlybanhang.InternalPage.Agency
         {
             _pagingHelper = new PagingHelper(PagingPlaceHolder, _agencyComponent, AgencyRepeater, CurrentPage, SetCurrentPage);
             if (!IsPostBack)
-            {   
+            {
                 agencyType.DataSource = _agencyRoleList;
                 agencyType.DataTextField = "Name";
                 agencyType.DataValueField = "Value";
                 agencyType.DataBind();
-                _pagingHelper.FetchData();             
-            }            
+                _pagingHelper.FetchData();
+            }
             _pagingHelper.CreatePagingControl();
 
         }

@@ -21,7 +21,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             try
             {
                 _conObj.Open();
-                string sql = "INSERT INTO products(id, name, exportprice, importprice, lastupdate) VALUES('" + product.ID + "', '" + product.Name + "', " + product.ExportPrice + ", " + product.ImportPrice + ", '" + DateTime.UtcNow.ToMySQLDateTimeString() + "')";
+                string sql = "INSERT INTO products(id, name, exportprice, importprice, lastupdate) VALUES('" + product.ID + "', '" + product.Name + "', " + product.ExportPrice + ", " + product.ImportPrice + ", '" + DateTime.UtcNow.ToUnixTime() + "')";
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 cmd.ExecuteNonQuery();
                 return true;
@@ -41,7 +41,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             try
             {
                 _conObj.Open();
-                string sql = "UPDATE products SET name = '" + product.Name + "', exportprice = " + product.ExportPrice + ", importprice = " + product.ImportPrice + ", lastupdate = '" + DateTime.UtcNow.ToMySQLDateTimeString() + "' WHERE ID ='" + product.ID + "'";
+                string sql = "UPDATE products SET name = '" + product.Name + "', exportprice = " + product.ExportPrice + ", importprice = " + product.ImportPrice + ", lastupdate = '" + DateTime.UtcNow.ToUnixTime() + "' WHERE ID ='" + product.ID + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 cmd.ExecuteNonQuery();
                 return true;
