@@ -15,6 +15,25 @@ namespace Quanlybanhang.InternalPage.Transaction
     {
         protected ProductsComponent _productComponent = new ProductsComponent();
         protected StoreTransactionComponent _storeTransactionComponent = new StoreTransactionComponent();
+        protected PagingHelper _pagingHelper;
+
+        public int CurrentPage
+        {
+            get
+            {
+                object obj = ViewState["CurrentPage"];
+                return (obj == null) ? 1 : (int)obj;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
+        }
+
+        public void SetCurrentPage(int page)
+        {
+            CurrentPage = page;
+        }
 
         protected StoreTransactionContract _currentTransaction
         {
@@ -23,8 +42,9 @@ namespace Quanlybanhang.InternalPage.Transaction
                 if (ViewState["_currentTransaction"] == null)
                 {
                     StoreTransactionContract transaction = new StoreTransactionContract();
-                    transaction.ID = Guid.NewGuid().ToString(); ;                   
-                    
+                    transaction.ID = Guid.NewGuid().ToString();
+                    transaction.Name = "Hungkodak";
+
                     ViewState["_currentTransaction"] = transaction;
                 }
                 return ((StoreTransactionContract)ViewState["_currentTransaction"]);
@@ -33,7 +53,12 @@ namespace Quanlybanhang.InternalPage.Transaction
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            _pagingHelper = new PagingHelper(PagingPlaceHolder, _productComponent, ImportRepeater, CurrentPage, SetCurrentPage);
+            if (!IsPostBack)
+            {
+                _pagingHelper.FetchData();
+            }
+            _pagingHelper.CreatePagingControl();
         }
 
         protected void btnAdded_Click(object sender, EventArgs e)
@@ -44,9 +69,9 @@ namespace Quanlybanhang.InternalPage.Transaction
                 return;
             }
 
-            if (_productComponent.IsProductExist(txtProductID.Text))
+            if (!_productComponent.IsProductExist(txtProductID.Text))
             {
-                MessageHelper.ShowErrorMessage("Product ID must be unique.");
+                MessageHelper.ShowErrorMessage("Product ID isn't correct.");
                 return;
             }
 
@@ -66,10 +91,10 @@ namespace Quanlybanhang.InternalPage.Transaction
                 Product = _productComponent.GetProduct(txtProductID.Text),
                 Quantity = UInt32.Parse(txtQuantity.Text)
             };
-            _currentTransaction.TransactionDetail.Add(item);
+            _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item);
             if(_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
             {
-
+                MessageHelper.ShowSucessMessage("Added Item success.");
             }
         }
     }

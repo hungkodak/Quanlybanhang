@@ -77,15 +77,6 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                             ExportPrice = Int32.Parse(reader[2].ToString()),
                             ImportPrice = Int32.Parse(reader[3].ToString())
                         };
-                        //using (MemoryStream memoryStream = new MemoryStream())
-                        //{
-                        //    Serializer.Serialize(memoryStream, product);
-                        //    //byte[] raw = memoryStream.ToArray();
-                        //    memoryStream.Position = 0;
-                        //    ProductContract clone = Serializer.Deserialize<ProductContract>(memoryStream);
-                        //    //string temp = memoryStream.ToString();
-                        //}
-                        
                         productList.Add(product);
                     }
                 }
@@ -163,6 +154,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
         }
     }
 
+    [Serializable]
     [ProtoContract]
     public class ProductContract
     {
