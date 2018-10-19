@@ -9,7 +9,7 @@ namespace Quanlybanhang.Scripts.Source.Components
 {
     public class TransactionDetailComponent : IDataComponent
     {
-        StoreTransactionContract Transaction { get; set; }
+        public StoreTransactionContract Transaction { get; set; }
 
         public override IList GetDataByPage(int pagesize, int page)
         {

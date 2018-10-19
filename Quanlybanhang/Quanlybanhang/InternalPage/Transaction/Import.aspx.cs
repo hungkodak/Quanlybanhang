@@ -16,6 +16,7 @@ namespace Quanlybanhang.InternalPage.Transaction
         protected ProductsComponent _productComponent = new ProductsComponent();
         protected StoreTransactionComponent _storeTransactionComponent = new StoreTransactionComponent();
         protected PagingHelper _pagingHelper;
+        protected TransactionDetailComponent _transactionDetailComponent = new TransactionDetailComponent();
 
         public int CurrentPage
         {
@@ -53,7 +54,9 @@ namespace Quanlybanhang.InternalPage.Transaction
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _pagingHelper = new PagingHelper(PagingPlaceHolder, _productComponent, ImportRepeater, CurrentPage, SetCurrentPage);
+            lbTransactionID.Text = "Transaction ID:" + _currentTransaction.ID;
+            _transactionDetailComponent.Transaction = _currentTransaction;
+            _pagingHelper = new PagingHelper(PagingPlaceHolder, _transactionDetailComponent, ImportRepeater, CurrentPage, SetCurrentPage);
             if (!IsPostBack)
             {
                 _pagingHelper.FetchData();
@@ -95,6 +98,75 @@ namespace Quanlybanhang.InternalPage.Transaction
             if(_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
             {
                 MessageHelper.ShowSucessMessage("Added Item success.");
+                _pagingHelper.FetchData();
+                _pagingHelper.CreatePagingControl();
+            }else
+            {
+                MessageHelper.ShowErrorMessage("Added Item failed.");
+            }
+        }
+
+        protected void ImportRepeater_OnItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            Label lbID = (Label)e.Item.FindControl("lblIdRpt");
+            TextBox txtNameRpt = (TextBox)e.Item.FindControl("txtNameRpt");
+            TextBox txtImportPriceRpt = (TextBox)e.Item.FindControl("txtImportPriceRpt");
+            TextBox txtQuantityRpt = (TextBox)e.Item.FindControl("txtQuantityRpt");
+            Button btnEdit = (Button)e.Item.FindControl("btnEdit");
+            Button btnUpdate = (Button)e.Item.FindControl("btnUpdate");
+            Button btnCancel = (Button)e.Item.FindControl("btnCancel");
+
+            switch (e.CommandName)
+            {
+                case "edit":
+                    //txtNameRpt.Enabled = true;
+                    //txtImportPriceRpt.Enabled = true;
+                    txtQuantityRpt.Enabled = true;
+                    btnEdit.Visible = false;
+                    btnUpdate.Visible = true;
+                    btnCancel.Visible = true;
+                    break;
+                case "cancel":
+                    //txtNameRpt.Enabled = false;
+                    //txtImportPriceRpt.Enabled = false;
+                    txtQuantityRpt.Enabled = false;
+                    btnEdit.Visible = true;
+                    btnUpdate.Visible = false;
+                    btnCancel.Visible = false;
+                    break;
+                case "update":
+
+                    uint quantity = 0;
+                    if(!UInt32.TryParse(txtQuantityRpt.Text, out quantity))
+                    {
+                        MessageHelper.ShowErrorMessage("Quantity must be a number and above zero");
+                    }
+                    else
+                    {
+                        TransactionDetail item = new TransactionDetail()
+                        {
+                            Product = _productComponent.GetProduct(txtProductID.Text),
+                            Quantity = quantity
+                        };
+                        _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item, true);
+                        if (_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
+                        {
+                            MessageHelper.ShowSucessMessage("Update Item success.");
+                            //txtNameRpt.Enabled = false;
+                            //txtImportPriceRpt.Enabled = false;
+                            txtQuantityRpt.Enabled = false;
+                            btnEdit.Visible = true;
+                            btnUpdate.Visible = false;
+                            btnCancel.Visible = false;
+                            _pagingHelper.FetchData();
+                            _pagingHelper.CreatePagingControl();
+                        }
+                        else
+                        {
+                            MessageHelper.ShowErrorMessage("Added Item failed.");
+                        }
+                    }                    
+                    break;
             }
         }
     }

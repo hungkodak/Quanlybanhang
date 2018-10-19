@@ -129,16 +129,25 @@ namespace Quanlybanhang.Scripts.Source.DBServices
 
     public static class TransactionDetailExtension
     {
-        public static void AddOrUpdateTransaction(this IList<TransactionDetail> transactionDetails, TransactionDetail item)
+        public static void AddOrUpdateTransaction(this IList<TransactionDetail> transactionDetails, TransactionDetail item, bool replace = false)
         {
             bool isFound = false;
+            TransactionDetail deleteItem = null;
             if(transactionDetails.Count>0)
             {
                 foreach(var transaction in transactionDetails)
                 {
                     if(transaction.Product.ID == item.Product.ID)
                     {
-                        transaction.Quantity += item.Quantity;
+                        if (replace)
+                        {
+                            transaction.Quantity = item.Quantity;
+                            deleteItem = transaction;
+                        }
+                        else
+                        {
+                            transaction.Quantity += item.Quantity;
+                        }
                         isFound = true;
                         break;
                     }
@@ -148,6 +157,12 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             if (!isFound)
             {
                 transactionDetails.Add(item);
+            }else
+            {
+                if(deleteItem != null && deleteItem.Quantity == 0)
+                {
+                    transactionDetails.Remove(deleteItem);
+                }
             }
         }
 

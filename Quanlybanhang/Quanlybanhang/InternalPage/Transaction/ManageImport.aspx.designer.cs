@@ -10,70 +10,43 @@
 namespace Quanlybanhang.InternalPage.Transaction {
     
     
-    public partial class Import {
+    public partial class ManageImport {
         
         /// <summary>
-        /// lbTransactionID control.
+        /// calendarFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTransactionID;
+        protected global::System.Web.UI.WebControls.Calendar calendarFrom;
         
         /// <summary>
-        /// txtAgencyName control.
+        /// calendarTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAgencyName;
+        protected global::System.Web.UI.WebControls.Calendar calendarTo;
         
         /// <summary>
-        /// txtProductID control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProductID;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// txtProductName control.
+        /// TransactionRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProductName;
-        
-        /// <summary>
-        /// txtQuantity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuantity;
-        
-        /// <summary>
-        /// btnAdded control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAdded;
-        
-        /// <summary>
-        /// ImportRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater ImportRepeater;
+        protected global::System.Web.UI.WebControls.Repeater TransactionRepeater;
         
         /// <summary>
         /// PagingPlaceHolder control.

@@ -2,12 +2,21 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <form>
     <br />
+    <div class="form-group">
+        <label><asp:Label ID="lbTransactionID" runat="server" Text="TransactionID:"></asp:Label></label>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">            
+            <label>Agency Name</label>
+            <asp:TextBox ID="txtAgencyName" runat="server" class="form-control" placeholder="Enter Agency Name"></asp:TextBox>  
+        </div>
+    </div>
     <div class="form-row">
         <div class="form-group col-md-4">            
             <label>Product ID (containt 4 letter and Unique)</label>
             <asp:TextBox ID="txtProductID" runat="server" class="form-control" placeholder="Enter Product ID"></asp:TextBox>  
         </div>
-        <div class="form-group col-md-5">            
+        <div class="form-group col-md-3">            
             <label>Product Name</label>
             <asp:TextBox ID="txtProductName" runat="server" class="form-control" placeholder="Enter Product Name"></asp:TextBox>  
         </div>
@@ -15,11 +24,13 @@
             <label>Quantity</label>
             <asp:TextBox ID="txtQuantity" runat="server" class="form-control" placeholder="1">1</asp:TextBox>  
         </div>
-    </div>      
-    <div class="form-row">
-        <asp:Button ID="btnAdded" runat="server" class="btn btn-primary" 
+        <div class="form-group col-md-2">
+        <label>Action</label>
+        <asp:Button ID="btnAdded" runat="server" class="form-control btn btn-primary" 
             Text="Added" onclick="btnAdded_Click"/>
-    </div>          
+        </div>          
+    </div>      
+    
 </form>
 
 <table class="table">
@@ -36,10 +47,10 @@
         </HeaderTemplate>        
         <ItemTemplate>  
             <tr>
-              <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("TransactionDetail.Product.ID") %>' /></th>
-              <td><asp:TextBox ID="txtNameRpt" runat="server" Text='<%#Eval("TransactionDetail.Product.Name") %>' Enabled="false"></asp:TextBox></td>
-              <td><asp:TextBox ID="txtImportPriceRpt" runat="server" Text='<%#Eval("TransactionDetail.Product.ImportPrice") %>' Enabled="false"></asp:TextBox></td>
-              <td><asp:TextBox ID="txtQuantityRpt" runat="server" Text='<%#Eval("TransactionDetail.Quantity") %>' Enabled="false"></asp:TextBox></td>
+              <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("Product.ID") %>' /></th>
+              <td><asp:TextBox ID="txtNameRpt" runat="server" Text='<%#Eval("Product.Name") %>' Enabled="false"></asp:TextBox></td>
+              <td><asp:TextBox ID="txtImportPriceRpt" runat="server" Text='<%#Eval("Product.ImportPrice") %>' Enabled="false"></asp:TextBox></td>
+              <td><asp:TextBox ID="txtQuantityRpt" runat="server" Text='<%#Eval("Quantity") %>' Enabled="false"></asp:TextBox></td>
               <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>
                   <asp:Button ID="btnUpdate" class="btn btn-primary" CommandName="update" Visible="false" runat="server" Text="Update"></asp:Button>
                   <asp:Button ID="btnCancel" class="btn btn-primary" CommandName="cancel" Visible="false" runat="server" Text="Cancel"></asp:Button>

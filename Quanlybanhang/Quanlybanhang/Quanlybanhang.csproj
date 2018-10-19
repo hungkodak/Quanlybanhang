@@ -146,6 +146,7 @@
     <Content Include="Images\logo.jpg" />
     <Content Include="InternalPage\Product\Products.aspx" />
     <Content Include="InternalPage\Transaction\Import.aspx" />
+    <Content Include="InternalPage\Transaction\ManageImport.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="InternalPage\Agency\Agency.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -212,6 +213,13 @@
     </Compile>
     <Compile Include="InternalPage\Transaction\Import.aspx.designer.cs">
       <DependentUpon>Import.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InternalPage\Transaction\ManageImport.aspx.cs">
+      <DependentUpon>ManageImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InternalPage\Transaction\ManageImport.aspx.designer.cs">
+      <DependentUpon>ManageImport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Scripts\Source\Components\TransactionDetailComponent.cs" />
     <Compile Include="Scripts\Source\Components\ProductsComponent.cs" />
