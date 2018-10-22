@@ -17,6 +17,7 @@ namespace Quanlybanhang.InternalPage.Transaction
         protected StoreTransactionComponent _storeTransactionComponent = new StoreTransactionComponent();
         protected PagingHelper _pagingHelper;
         protected TransactionDetailComponent _transactionDetailComponent = new TransactionDetailComponent();
+        protected WareHouseComponent _wareHouseComponent = new WareHouseComponent();
 
         public int CurrentPage
         {
@@ -93,7 +94,8 @@ namespace Quanlybanhang.InternalPage.Transaction
             {
                 Product = _productComponent.GetProduct(txtProductID.Text),
                 Quantity = UInt32.Parse(txtQuantity.Text)
-            };
+            };            
+            _wareHouseComponent.CreateOrUpdateWareHouse(item);
             _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item);
             if(_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
             {
@@ -148,6 +150,19 @@ namespace Quanlybanhang.InternalPage.Transaction
                             Product = _productComponent.GetProduct(txtProductID.Text),
                             Quantity = quantity
                         };
+
+                        TransactionDetail currentItem = _currentTransaction.TransactionDetail.FindTransaction(item.Product.ID);
+                        int delta = (int)item.Quantity - (int)currentItem.Quantity;
+                        int newQuantity = (int)currentItem.Quantity + delta;
+                        
+                        if (newQuantity < 0)
+                        {
+                            MessageHelper.ShowErrorMessage("Don't have enough quantity to change");
+                            return;
+                        }
+                        currentItem.Quantity = (uint)newQuantity;
+
+                        _wareHouseComponent.CreateOrUpdateWareHouse(currentItem);
                         _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item, true);
                         if (_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
                         {

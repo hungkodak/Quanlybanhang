@@ -234,6 +234,7 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Source\Components\WareHouseComponent.cs" />
     <Compile Include="Scripts\Source\DBServices\AccountsServices.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -246,6 +247,7 @@
     <Compile Include="Scripts\Source\DBServices\AgencyServices.cs" />
     <Compile Include="Scripts\Source\DBServices\Core\SQLQueryHelper.cs" />
     <Compile Include="Scripts\Source\DBServices\StoreTransactionServices.cs" />
+    <Compile Include="Scripts\Source\DBServices\WareHouseServices.cs" />
     <Compile Include="Scripts\Source\Defination\AdminRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

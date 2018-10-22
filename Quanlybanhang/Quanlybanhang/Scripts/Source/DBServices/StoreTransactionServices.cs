@@ -127,6 +127,30 @@ namespace Quanlybanhang.Scripts.Source.DBServices
         public uint Quantity { get; set; }        
     }
 
+    public static class StoreTransactionExtension
+    {
+        public static long CalculateToTal(this StoreTransactionContract storeTransactionContract)
+        {
+            long total = 0;
+            foreach(var item in storeTransactionContract.TransactionDetail)
+            {
+                if(storeTransactionContract.Type == AgencyRole.Import)
+                {
+                    total += item.Product.ImportPrice * item.Quantity;
+                }else
+                {
+                    total += item.Product.ExportPrice * item.Quantity;
+                }                
+            }
+            if(storeTransactionContract.Type == AgencyRole.Export)
+            {
+                total -= (long)(total * storeTransactionContract.Discount);
+                total += storeTransactionContract.Shippingfee;
+            }
+            return total;
+        }
+    }
+
     public static class TransactionDetailExtension
     {
         public static void AddOrUpdateTransaction(this IList<TransactionDetail> transactionDetails, TransactionDetail item, bool replace = false)
@@ -164,6 +188,21 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                     transactionDetails.Remove(deleteItem);
                 }
             }
+        }
+
+        public static TransactionDetail FindTransaction(this IList<TransactionDetail> transactionDetails, string productId)
+        {   
+            if (transactionDetails.Count > 0)
+            {
+                foreach (var transaction in transactionDetails)
+                {
+                    if (transaction.Product.ID == productId)
+                    {
+                        return transaction;
+                    }
+                }
+            }
+            return null;
         }
 
         public static List<TransactionDetail> GetTransactionDetailList(this IList<TransactionDetail> transactionDetails, int offset, int numrow)
