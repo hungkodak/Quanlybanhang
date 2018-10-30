@@ -227,3 +227,4 @@ D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.pd
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csprojAssemblyReference.cache
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csproj.CoreCompileInputs.cache
 D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\obj\Debug\Quanlybanhang.csproj.CopyComplete
+D:\MyGitHub\Quanlybanhang\Quanlybanhang\Quanlybanhang\bin\AjaxControlToolkit.dll

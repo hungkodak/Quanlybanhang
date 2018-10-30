@@ -31,6 +31,15 @@ namespace Quanlybanhang.InternalPage.Transaction {
         protected global::System.Web.UI.WebControls.TextBox txtAgencyName;
         
         /// <summary>
+        /// autoComplete1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender autoComplete1;
+        
+        /// <summary>
         /// txtProductID control.
         /// </summary>
         /// <remarks>

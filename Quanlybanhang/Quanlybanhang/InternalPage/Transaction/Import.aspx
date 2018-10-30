@@ -8,7 +8,19 @@
     <div class="form-row">
         <div class="form-group col-md-4">            
             <label>Agency Name</label>
-            <asp:TextBox ID="txtAgencyName" runat="server" class="form-control" placeholder="Enter Agency Name"></asp:TextBox>  
+            <asp:TextBox ID="txtAgencyName" runat="server" class="form-control" placeholder="Enter Agency Name"></asp:TextBox>
+            <ajaxToolkit:AutoCompleteExtender
+                runat="server" 
+                BehaviorID="AutoCompleteEx"
+                ID="autoComplete1" 
+                TargetControlID="txtAgencyName"
+                ServicePath="~/Scripts/Source/WebServices/AutoCompleteService.asmx" 
+                ServiceMethod="GetCompletionAgencyImportList"
+                MinimumPrefixLength="1" 
+                CompletionInterval="1000"
+                EnableCaching="true"
+                CompletionSetCount="20"                                
+                ShowOnlyCurrentWordInCompletionListItem="true" />
         </div>
     </div>
     <div class="form-row">
