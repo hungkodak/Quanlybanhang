@@ -85,5 +85,10 @@ namespace Quanlybanhang.Scripts.Source.Components
 
             return 0;
         }
+
+        public IList<ProductContract> SearchProductByProductId(string productId, int limit = 1)
+        {            
+            return ProductsServices.SearchProductByProductId(productId,limit);
+        }
     }
 }

@@ -13,15 +13,15 @@ namespace Quanlybanhang.InternalPage.Transaction
         {
             if(!IsPostBack)
             {
-                calendarFrom.SelectedDate = DateTime.UtcNow;
-                calendarFrom.TodaysDate = DateTime.UtcNow;
-                
+                calendarFrom.SelectedDate = calendarTo.SelectedDate.Add(new TimeSpan(-24, 0, 0));
                 calendarTo.SelectedDate = DateTime.UtcNow;
-                calendarTo.TodaysDate = DateTime.UtcNow;
             }
         }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            DateTime date = calendarFrom.SelectedDate;
+            DateTime date2 = calendarFrom.TodaysDate;
+
             //if (ValidatorHelper.isBlank(txtProductID.Text) || txtProductID.Text.Length != 4)
             //{
             //    MessageHelper.ShowErrorMessage("Product ID must have 4 unique character.");

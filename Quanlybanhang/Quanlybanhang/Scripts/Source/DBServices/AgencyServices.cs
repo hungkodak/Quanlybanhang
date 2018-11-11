@@ -150,6 +150,49 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                 _conObj.Close();
             }
         }
+
+        static public List<AgencyContract> SearchAgencyByName(string name, AgencyRole? role, int limit=1)
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "";
+                if (role == null)
+                {
+                    sql = "SELECT * FROM agency where name like '%" + name + "%' limit "+limit;
+                }
+                else
+                {
+                    sql = "SELECT * FROM agency where name like '%" + name + "%' and type = " + (int)role + " limit " + limit;
+                }
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<AgencyContract> agencyList = new List<AgencyContract>();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        AgencyContract agency = new AgencyContract()
+                        {
+                            ID = Int32.Parse(reader[0].ToString()),
+                            AgencyName = reader[1].ToString(),
+                            Role = (AgencyRole)reader[2]
+                        };
+                        agencyList.Add(agency);
+                    }
+                }
+                return agencyList;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("AgencyServices:GetAgencyList", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
     }
 
     public class AgencyContract

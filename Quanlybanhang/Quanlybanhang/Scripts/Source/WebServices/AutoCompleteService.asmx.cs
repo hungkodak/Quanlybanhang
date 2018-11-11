@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Quanlybanhang.Scripts.Source.Components;
+using Quanlybanhang.Scripts.Source.DBServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,8 @@ namespace Quanlybanhang.Scripts.Source.WebServices
     [System.Web.Script.Services.ScriptService]
     public class AutoCompleteService : System.Web.Services.WebService
     {
+        static protected AgencyComponent _agencyComponent = new AgencyComponent();
+        static protected ProductsComponent _productComponent = new ProductsComponent();
         [WebMethod]
         public string[] GetCompletionAgencyImportList(string prefixText, int count)
         {
@@ -23,21 +27,60 @@ namespace Quanlybanhang.Scripts.Source.WebServices
             {
                 count = 10;
             }
-
-            if (prefixText.Equals("xyz"))
+            IList<AgencyContract> listAgency = _agencyComponent.SearchAgencyByName(prefixText, Defination.AgencyRole.Import, count);
+            if(listAgency == null || listAgency.Count == 0)
             {
                 return new string[0];
             }
 
-            var random = new Random();
             var items = new List<string>(count);
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < listAgency.Count; i++)
             {
-                var c1 = (char)random.Next(65, 90);
-                var c2 = (char)random.Next(97, 122);
-                var c3 = (char)random.Next(97, 122);
+                items.Add(listAgency[i].AgencyName);
+            }
 
-                items.Add(prefixText + c1 + c2 + c3);
+            return items.ToArray();
+        }
+
+        [WebMethod]
+        public string[] GetCompletionAgencyExportList(string prefixText, int count)
+        {
+            if (count == 0)
+            {
+                count = 10;
+            }
+            IList<AgencyContract> listAgency = _agencyComponent.SearchAgencyByName(prefixText, Defination.AgencyRole.Export, count);
+            if (listAgency == null || listAgency.Count == 0)
+            {
+                return new string[0];
+            }
+
+            var items = new List<string>(count);
+            for (var i = 0; i < listAgency.Count; i++)
+            {
+                items.Add(listAgency[i].AgencyName);
+            }
+
+            return items.ToArray();
+        }
+
+        [WebMethod]
+        public string[] GetCompletionProductIdList(string prefixText, int count)
+        {
+            if (count == 0)
+            {
+                count = 10;
+            }
+            IList<ProductContract> listProduct = _productComponent.SearchProductByProductId(prefixText, count);
+            if (listProduct == null || listProduct.Count == 0)
+            {
+                return new string[0];
+            }
+
+            var items = new List<string>(count);
+            for (var i = 0; i < listProduct.Count; i++)
+            {
+                items.Add(listProduct[i].ID);
             }
 
             return items.ToArray();

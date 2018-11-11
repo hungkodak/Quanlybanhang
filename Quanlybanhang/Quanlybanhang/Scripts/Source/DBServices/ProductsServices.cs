@@ -152,6 +152,42 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                 _conObj.Close();
             }
         }
+
+        static public List<ProductContract> SearchProductByProductId(string productId, int limit=1)
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "SELECT * FROM products where ID like '%"+ productId +"%' limit " + limit;
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<ProductContract> productList = new List<ProductContract>();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ProductContract product = new ProductContract()
+                        {
+                            ID = reader[0].ToString(),
+                            Name = reader[1].ToString(),
+                            ExportPrice = Int32.Parse(reader[2].ToString()),
+                            ImportPrice = Int32.Parse(reader[3].ToString())
+                        };
+                        productList.Add(product);
+                    }
+                }
+                return productList;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("ProductsServices:GetProductList", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
     }
 
     [Serializable]

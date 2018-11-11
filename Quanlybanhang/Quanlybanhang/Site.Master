@@ -58,7 +58,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Transaction</a>
                             <div class="dropdown-menu" style="background-color: #222" aria-labelledby="navbarDropdown">
-                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/Import">Import</a><br />                              
+                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/ManageImport">ManageImport</a><br />                              
                               <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/Import">Import</a>                              
                             </div>
                         </li>

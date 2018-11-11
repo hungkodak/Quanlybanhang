@@ -49,6 +49,15 @@ namespace Quanlybanhang.InternalPage.Transaction {
         protected global::System.Web.UI.WebControls.TextBox txtProductID;
         
         /// <summary>
+        /// AutoCompleteExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
+        
+        /// <summary>
         /// txtProductName control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace Quanlybanhang.InternalPage.Transaction {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater ImportRepeater;
+        
+        /// <summary>
+        /// lbTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTotal;
         
         /// <summary>
         /// PagingPlaceHolder control.

@@ -19,18 +19,30 @@
                 MinimumPrefixLength="1" 
                 CompletionInterval="1000"
                 EnableCaching="true"
-                CompletionSetCount="20"                                
+                CompletionSetCount="5"                                
                 ShowOnlyCurrentWordInCompletionListItem="true" />
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-4">            
             <label>Product ID (containt 4 letter and Unique)</label>
-            <asp:TextBox ID="txtProductID" runat="server" class="form-control" placeholder="Enter Product ID"></asp:TextBox>  
+            <asp:TextBox ID="txtProductID" runat="server" class="form-control" placeholder="Enter Product ID" AutoPostBack="True" OnTextChanged ="TxtProductID_TextChanged"></asp:TextBox> 
+            <ajaxToolkit:AutoCompleteExtender
+                runat="server" 
+                BehaviorID="AutoCompleteEx"
+                ID="AutoCompleteExtender1" 
+                TargetControlID="txtProductID"
+                ServicePath="~/Scripts/Source/WebServices/AutoCompleteService.asmx" 
+                ServiceMethod="GetCompletionProductIdList"                
+                MinimumPrefixLength="1" 
+                CompletionInterval="1000"
+                EnableCaching="true"
+                CompletionSetCount="5"                                
+                ShowOnlyCurrentWordInCompletionListItem="true" />
         </div>
         <div class="form-group col-md-3">            
             <label>Product Name</label>
-            <asp:TextBox ID="txtProductName" runat="server" class="form-control" placeholder="Enter Product Name"></asp:TextBox>  
+            <asp:TextBox ID="txtProductName" runat="server" class="form-control" placeholder="" Enabled="false"></asp:TextBox>  
         </div>
         <div class="form-group col-md-3">            
             <label>Quantity</label>
@@ -70,6 +82,10 @@
             </tr>
         </ItemTemplate>        
     </asp:Repeater>
+    <tr>
+        <td colspan="3">Total:</td>
+        <td><asp:Label ID="lbTotal" runat="server" Text='0' Enabled="false"></asp:Label></td>
+    </tr>
 </table>
     <asp:PlaceHolder ID="PagingPlaceHolder" runat="server"></asp:PlaceHolder>
 </asp:Content>

@@ -60,5 +60,10 @@ namespace Quanlybanhang.Scripts.Source.Components
 
             return 0;
         }
+
+        public IList<AgencyContract> SearchAgencyByName(string name, AgencyRole? role, int limit = 1)
+        {
+            return AgencyServices.SearchAgencyByName(name, role, limit);
+        }
     }
 }

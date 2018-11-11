@@ -45,7 +45,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                 {
                     StoreTransactionContract transaction = new StoreTransactionContract();
                     transaction.ID = Guid.NewGuid().ToString();
-                    transaction.Name = "Hungkodak";
+                    transaction.Name = "";
 
                     ViewState["_currentTransaction"] = transaction;
                 }
@@ -63,10 +63,17 @@ namespace Quanlybanhang.InternalPage.Transaction
                 _pagingHelper.FetchData();
             }
             _pagingHelper.CreatePagingControl();
+            lbTotal.Text = _currentTransaction.CalculateToTal().ToString();
         }
 
         protected void btnAdded_Click(object sender, EventArgs e)
         {
+            if(ValidatorHelper.isBlank(txtAgencyName.Text))
+            {
+                MessageHelper.ShowErrorMessage("Agency Name could not be blank.");
+                return;
+            }
+
             if (ValidatorHelper.isBlank(txtProductID.Text) || txtProductID.Text.Length != 4)
             {
                 MessageHelper.ShowErrorMessage("Product ID must have 4 unique character.");
@@ -96,13 +103,16 @@ namespace Quanlybanhang.InternalPage.Transaction
                 Quantity = UInt32.Parse(txtQuantity.Text)
             };            
             _wareHouseComponent.CreateOrUpdateWareHouse(item);
+            _currentTransaction.Name = txtAgencyName.Text;
             _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item);
             if(_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
             {
                 MessageHelper.ShowSucessMessage("Added Item success.");
                 _pagingHelper.FetchData();
                 _pagingHelper.CreatePagingControl();
-            }else
+                lbTotal.Text = _currentTransaction.CalculateToTal().ToString();
+            }
+            else
             {
                 MessageHelper.ShowErrorMessage("Added Item failed.");
             }
@@ -175,6 +185,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                             btnCancel.Visible = false;
                             _pagingHelper.FetchData();
                             _pagingHelper.CreatePagingControl();
+                            lbTotal.Text = _currentTransaction.CalculateToTal().ToString();
                         }
                         else
                         {
@@ -182,6 +193,18 @@ namespace Quanlybanhang.InternalPage.Transaction
                         }
                     }                    
                     break;
+            }
+        }
+
+        protected void TxtProductID_TextChanged(object sender, EventArgs e)
+        {
+            ProductContract product = _productComponent.GetProduct(txtProductID.Text);
+            if (product != null)
+            {
+                txtProductName.Text = product.Name;
+            }else
+            {
+                txtProductName.Text = "";
             }
         }
     }
