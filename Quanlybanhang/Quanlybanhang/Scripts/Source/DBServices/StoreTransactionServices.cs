@@ -85,7 +85,54 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             {
                 _conObj.Close();
             }
-        }        
+        }
+
+        static public IList<StoreTransactionContract> GetTransactionDuringPeriod(DateTime from, DateTime to, AgencyRole? type = null)
+        {
+            try
+            {
+                _conObj.Open();
+                string sql = "";
+                if (type == null)
+                {
+                    sql = "SELECT * FROM store_transaction where lastupdate >= " + from.ToUnixTime() + " and  lastupdate <= " + to.ToUnixTime();
+                }
+                else
+                {
+                    sql = "SELECT * FROM store_transaction where lastupdate >= " + from.ToUnixTime() + " and  lastupdate <= " + to.ToUnixTime() + " and type="+(int)type;
+                }
+                MySqlCommand cmd = new MySqlCommand(sql, _conObj);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<StoreTransactionContract> storeTransactions = new List<StoreTransactionContract>();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        IList<TransactionDetail> transactionDetails = SerializerHelper.Deserialize<IList<TransactionDetail>>((byte[])reader[3]);
+                        StoreTransactionContract storeTransaction = new StoreTransactionContract()
+                        {
+                            ID = reader[0].ToString(),
+                            Name = reader[1].ToString(),
+                            Type = (AgencyRole)reader[2],
+                            TransactionDetail = transactionDetails,
+                            Shippingfee = Int32.Parse(reader[4].ToString()),
+                            Discount = float.Parse(reader[5].ToString())
+                        };
+                        storeTransactions.Add(storeTransaction);
+                    }
+                }
+                return storeTransactions;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("StoreTransactionServices:GetTransactionDuringPeriod", ex);
+            }
+            finally
+            {
+                _conObj.Close();
+            }
+        }
     }
 
     [Serializable]
@@ -124,7 +171,10 @@ namespace Quanlybanhang.Scripts.Source.DBServices
         public ProductContract Product { get; set; }
 
         [ProtoMember(2)]
-        public uint Quantity { get; set; }        
+        public ProductSize Size { get; set; }
+
+        [ProtoMember(3)]
+        public int Quantity { get; set; }        
     }
 
     public static class StoreTransactionExtension
@@ -149,6 +199,15 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
             return total;
         }
+
+        public static List<StoreTransactionContract> GetTransactionList(this IList<StoreTransactionContract> transactions, int offset, int numrow)
+        {
+            if (transactions.Count > 0)
+            {
+                return transactions.Skip(offset).Take(numrow).ToList();
+            }
+            return new List<StoreTransactionContract>();
+        }
     }
 
     public static class TransactionDetailExtension
@@ -161,7 +220,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             {
                 foreach(var transaction in transactionDetails)
                 {
-                    if(transaction.Product.ID == item.Product.ID)
+                    if(transaction.Product.ID == item.Product.ID && transaction.Size == item.Size)
                     {
                         if (replace)
                         {
@@ -190,13 +249,13 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
         }
 
-        public static TransactionDetail FindTransaction(this IList<TransactionDetail> transactionDetails, string productId)
+        public static TransactionDetail FindTransaction(this IList<TransactionDetail> transactionDetails, string productId, ProductSize size)
         {   
             if (transactionDetails.Count > 0)
             {
                 foreach (var transaction in transactionDetails)
                 {
-                    if (transaction.Product.ID == productId)
+                    if (transaction.Product.ID == productId && transaction.Size == size)
                     {
                         return transaction;
                     }

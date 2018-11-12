@@ -143,7 +143,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
             catch (MySqlException ex)
             {
-                throw new Exception("AgencyServices:GetAgencyList", ex);
+                throw new Exception("AgencyServices:GetAgencyListByRole", ex);
             }
             finally
             {
@@ -186,7 +186,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
             catch (MySqlException ex)
             {
-                throw new Exception("AgencyServices:GetAgencyList", ex);
+                throw new Exception("AgencyServices:SearchAgencyByName", ex);
             }
             finally
             {

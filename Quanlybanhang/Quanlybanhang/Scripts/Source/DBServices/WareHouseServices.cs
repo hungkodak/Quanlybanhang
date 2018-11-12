@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Quanlybanhang.Scripts.Source.Defination;
 using Quanlybanhang.Scripts.Source.Utils;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             {
                 return false;
             }
-            TransactionDetail existTransactionDetail = GetProductFromWareHouse(transactionDetail.Product.ID);
+            TransactionDetail existTransactionDetail = GetProductFromWareHouse(transactionDetail.Product.ID, transactionDetail.Size);
             if (existTransactionDetail == null)
             {
                 if (!CreateInternal(transactionDetail))
@@ -29,7 +30,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             else
             {
                 existTransactionDetail.Quantity += transactionDetail.Quantity;
-                if (!UpdateInternal(transactionDetail))
+                if (!UpdateInternal(existTransactionDetail))
                 {
                     return false;
                 }
@@ -43,7 +44,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             {
                 _conObj.Open();                
 
-                string sql = "INSERT INTO warehouse(productId, quantity, lastupdate) VALUES('" + transactionDetail.Product.ID + "'," + transactionDetail.Quantity + ", '" + DateTime.UtcNow.ToUnixTime() + "')";
+                string sql = "INSERT INTO warehouse(productId, size, quantity, lastupdate) VALUES('" + transactionDetail.Product.ID + "','" + transactionDetail.Size + "', " + transactionDetail.Quantity + ", '" + DateTime.UtcNow.ToUnixTime() + "')";
                 
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);                
                 cmd.ExecuteNonQuery();
@@ -65,7 +66,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             {
                 _conObj.Open();                
 
-                string sql = "UPDATE warehouse set quantity='"+ transactionDetail.Quantity + "', lastupdate = '" + DateTime.UtcNow.ToUnixTime() + "' WHERE productid ='" + transactionDetail.Product.ID + "'";                            
+                string sql = "UPDATE warehouse set quantity='"+ transactionDetail.Quantity + "', lastupdate = '" + DateTime.UtcNow.ToUnixTime() + "' WHERE productid ='" + transactionDetail.Product.ID + "' and size='" + transactionDetail.Size + "'";                            
 
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 cmd.ExecuteNonQuery();
@@ -81,12 +82,12 @@ namespace Quanlybanhang.Scripts.Source.DBServices
             }
         }
 
-        static public TransactionDetail GetProductFromWareHouse(string productId)
+        static public TransactionDetail GetProductFromWareHouse(string productId, ProductSize size)
         {
             try
             {
                 _conObj.Open();
-                string sql = "SELECT * FROM warehouse where productId='" + productId + "'";
+                string sql = "SELECT * FROM warehouse where productId='" + productId + "' and size='" + size + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, _conObj);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 
@@ -94,12 +95,12 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    ProductContract product = ProductsServices.GetProduct(reader[0].ToString());
+                    ProductContract product = ProductsServices.GetProduct(reader[1].ToString());
                     if (product == null)
                     {
                         product = new ProductContract()
                         {
-                            ID = reader[0].ToString(),
+                            ID = reader[1].ToString(),
                             Name = "Not found in product",
                             ExportPrice = 0,
                             ImportPrice = 0
@@ -108,7 +109,8 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                     TransactionDetail transactionDetail = new TransactionDetail()
                     {
                         Product = product,
-                        Quantity = UInt32.Parse(reader[2].ToString())
+                        Size = (ProductSize)Enum.Parse(typeof(ProductSize), reader[2].ToString()),
+                        Quantity = Int32.Parse(reader[3].ToString())
                     };
                     return transactionDetail;
                 }

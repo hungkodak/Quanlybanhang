@@ -1,5 +1,6 @@
 ﻿using Quanlybanhang.Scripts.Source.Components;
 using Quanlybanhang.Scripts.Source.DBServices;
+using Quanlybanhang.Scripts.Source.Defination;
 using Quanlybanhang.Scripts.Source.Utils;
 using Quanlybanhang.Utils;
 using System;
@@ -18,6 +19,30 @@ namespace Quanlybanhang.InternalPage.Transaction
         protected PagingHelper _pagingHelper;
         protected TransactionDetailComponent _transactionDetailComponent = new TransactionDetailComponent();
         protected WareHouseComponent _wareHouseComponent = new WareHouseComponent();
+
+        protected List<ProductSizeContract> _productSizeList
+        {
+            get
+            {
+                if (ViewState["_productSizeList"] == null)
+                {
+                    List<ProductSizeContract> list = new List<ProductSizeContract>();
+                    int[] itemValues = (int[])Enum.GetValues(typeof(ProductSize));
+                    string[] itemNames = Enum.GetNames(typeof(ProductSize));
+                    for (int i = 0; i <= itemNames.Length - 1; i++)
+                    {
+                        ProductSizeContract item = new ProductSizeContract()
+                        {
+                            Name = itemNames[i],
+                            Value = itemValues[i]
+                        };
+                        list.Add(item);
+                    }
+                    ViewState["_productSizeList"] = list;
+                }
+                return ((List<ProductSizeContract>)ViewState["_productSizeList"]);
+            }
+        }
 
         public int CurrentPage
         {
@@ -60,6 +85,10 @@ namespace Quanlybanhang.InternalPage.Transaction
             _pagingHelper = new PagingHelper(PagingPlaceHolder, _transactionDetailComponent, ImportRepeater, CurrentPage, SetCurrentPage);
             if (!IsPostBack)
             {
+                productSize.DataSource = _productSizeList;
+                productSize.DataTextField = "Name";
+                productSize.DataValueField = "Value";
+                productSize.DataBind();
                 _pagingHelper.FetchData();
             }
             _pagingHelper.CreatePagingControl();
@@ -100,7 +129,8 @@ namespace Quanlybanhang.InternalPage.Transaction
             TransactionDetail item = new TransactionDetail()
             {
                 Product = _productComponent.GetProduct(txtProductID.Text),
-                Quantity = UInt32.Parse(txtQuantity.Text)
+                Size = (ProductSize)Enum.Parse(typeof(ProductSize), productSize.SelectedValue),
+                Quantity = Int32.Parse(txtQuantity.Text)
             };            
             _wareHouseComponent.CreateOrUpdateWareHouse(item);
             _currentTransaction.Name = txtAgencyName.Text;
@@ -117,6 +147,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                 MessageHelper.ShowErrorMessage("Added Item failed.");
             }
         }
+        
 
         protected void ImportRepeater_OnItemCommand(object source, RepeaterCommandEventArgs e)
         {
@@ -124,6 +155,7 @@ namespace Quanlybanhang.InternalPage.Transaction
             TextBox txtNameRpt = (TextBox)e.Item.FindControl("txtNameRpt");
             TextBox txtImportPriceRpt = (TextBox)e.Item.FindControl("txtImportPriceRpt");
             TextBox txtQuantityRpt = (TextBox)e.Item.FindControl("txtQuantityRpt");
+            TextBox txtsize = (TextBox)e.Item.FindControl("sizeRpt");
             Button btnEdit = (Button)e.Item.FindControl("btnEdit");
             Button btnUpdate = (Button)e.Item.FindControl("btnUpdate");
             Button btnCancel = (Button)e.Item.FindControl("btnCancel");
@@ -148,8 +180,8 @@ namespace Quanlybanhang.InternalPage.Transaction
                     break;
                 case "update":
 
-                    uint quantity = 0;
-                    if(!UInt32.TryParse(txtQuantityRpt.Text, out quantity))
+                    int quantity = 0;
+                    if(!Int32.TryParse(txtQuantityRpt.Text, out quantity))
                     {
                         MessageHelper.ShowErrorMessage("Quantity must be a number and above zero");
                     }
@@ -158,10 +190,11 @@ namespace Quanlybanhang.InternalPage.Transaction
                         TransactionDetail item = new TransactionDetail()
                         {
                             Product = _productComponent.GetProduct(txtProductID.Text),
+                            Size = (ProductSize)Enum.Parse(typeof(ProductSize), txtsize.Text),
                             Quantity = quantity
                         };
 
-                        TransactionDetail currentItem = _currentTransaction.TransactionDetail.FindTransaction(item.Product.ID);
+                        TransactionDetail currentItem = _currentTransaction.TransactionDetail.FindTransaction(item.Product.ID, item.Size);
                         int delta = (int)item.Quantity - (int)currentItem.Quantity;
                         int newQuantity = (int)currentItem.Quantity + delta;
                         
@@ -170,10 +203,11 @@ namespace Quanlybanhang.InternalPage.Transaction
                             MessageHelper.ShowErrorMessage("Don't have enough quantity to change");
                             return;
                         }
-                        currentItem.Quantity = (uint)newQuantity;
+                        item.Quantity = delta;
+                        currentItem.Quantity = newQuantity;
 
-                        _wareHouseComponent.CreateOrUpdateWareHouse(currentItem);
-                        _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item, true);
+                        _wareHouseComponent.CreateOrUpdateWareHouse(item);
+                        _currentTransaction.TransactionDetail.AddOrUpdateTransaction(currentItem, true);
                         if (_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
                         {
                             MessageHelper.ShowSucessMessage("Update Item success.");
