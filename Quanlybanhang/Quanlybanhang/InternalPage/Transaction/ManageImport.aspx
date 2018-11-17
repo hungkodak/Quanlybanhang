@@ -17,26 +17,26 @@
         </div>          
     </div>   
 <table class="table">
-    <asp:Repeater ID="TransactionRepeater" runat="server"> <%--onitemcommand="ImportRepeater_OnItemCommand">--%>
+    <asp:Repeater ID="TransactionRepeater" runat="server" onitemcommand="Transaction_OnItemCommand">
         <HeaderTemplate>
           <thead >
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <%--<th scope="col">Import Price</th>
-              <th scope="col">Export Price</th>--%>
+              <th scope="col">Shippingfee</th>
+              <th scope="col">Discount</th>
+              <th scope="col">Total</th>
             </tr>
           </thead>
         </HeaderTemplate>        
         <ItemTemplate>  
             <tr>
               <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("ID") %>' /></th>
-              <td><asp:TextBox ID="txtNameRpt" runat="server" Text='<%#Eval("Name") %>' Enabled="false"></asp:TextBox></td>
-              <%--<td><asp:TextBox ID="txtImportPriceRpt" runat="server" Text='<%#Eval("Product.ImportPrice") %>' Enabled="false"></asp:TextBox></td>
-              <td><asp:TextBox ID="txtQuantityRpt" runat="server" Text='<%#Eval("Quantity") %>' Enabled="false"></asp:TextBox></td>--%>
-              <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>
-                  <asp:Button ID="btnUpdate" class="btn btn-primary" CommandName="update" Visible="false" runat="server" Text="Update"></asp:Button>
-                  <asp:Button ID="btnCancel" class="btn btn-primary" CommandName="cancel" Visible="false" runat="server" Text="Cancel"></asp:Button>
+              <td><asp:Label ID="txtNameRpt" runat="server" Text='<%#Eval("Name") %>' ></asp:Label></td>
+              <td><asp:Label ID="txtShippingfeeRpt" runat="server" Text='<%#Eval("Shippingfee") %>' ></asp:Label></td>
+              <td><asp:Label ID="txtDiscountRpt" runat="server" Text='<%#Eval("Discount") %>' ></asp:Label></td>
+              <td><asp:Label ID="Label1" runat="server" Text='<%#Eval("Total") %>' ></asp:Label></td>
+              <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>                  
               </td>
             </tr>
         </ItemTemplate>        

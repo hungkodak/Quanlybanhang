@@ -76,6 +76,10 @@ namespace Quanlybanhang.InternalPage.Transaction
                 }
                 return ((StoreTransactionContract)ViewState["_currentTransaction"]);
             }
+            set
+            {
+                ViewState["_currentTransaction"] = value;
+            }           
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -89,6 +93,13 @@ namespace Quanlybanhang.InternalPage.Transaction
                 productSize.DataTextField = "Name";
                 productSize.DataValueField = "Value";
                 productSize.DataBind();
+                if (Request.QueryString["id"] != null)
+                {
+                    _currentTransaction = _storeTransactionComponent.GetTransaction(Request.QueryString["id"]);
+                    lbTransactionID.Text = "Transaction ID:" + _currentTransaction.ID;
+                    _transactionDetailComponent.Transaction = _currentTransaction;
+                    txtAgencyName.Text = _currentTransaction.Name;
+                }
                 _pagingHelper.FetchData();
             }
             _pagingHelper.CreatePagingControl();
@@ -152,10 +163,10 @@ namespace Quanlybanhang.InternalPage.Transaction
         protected void ImportRepeater_OnItemCommand(object source, RepeaterCommandEventArgs e)
         {
             Label lbID = (Label)e.Item.FindControl("lblIdRpt");
-            TextBox txtNameRpt = (TextBox)e.Item.FindControl("txtNameRpt");
-            TextBox txtImportPriceRpt = (TextBox)e.Item.FindControl("txtImportPriceRpt");
+            Label txtNameRpt = (Label)e.Item.FindControl("txtNameRpt");
+            Label txtImportPriceRpt = (Label)e.Item.FindControl("txtImportPriceRpt");
             TextBox txtQuantityRpt = (TextBox)e.Item.FindControl("txtQuantityRpt");
-            TextBox txtsize = (TextBox)e.Item.FindControl("sizeRpt");
+            Label txtsize = (Label)e.Item.FindControl("sizeRpt");
             Button btnEdit = (Button)e.Item.FindControl("btnEdit");
             Button btnUpdate = (Button)e.Item.FindControl("btnUpdate");
             Button btnCancel = (Button)e.Item.FindControl("btnCancel");
@@ -189,7 +200,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                     {
                         TransactionDetail item = new TransactionDetail()
                         {
-                            Product = _productComponent.GetProduct(txtProductID.Text),
+                            Product = _productComponent.GetProduct(lbID.Text),
                             Size = (ProductSize)Enum.Parse(typeof(ProductSize), txtsize.Text),
                             Quantity = quantity
                         };

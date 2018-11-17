@@ -77,9 +77,9 @@
         <ItemTemplate>  
             <tr>
               <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("Product.ID") %>' /></th>
-              <td><asp:TextBox ID="txtNameRpt" runat="server" Text='<%#Eval("Product.Name") %>' Enabled="false"></asp:TextBox></td>
-              <td><asp:TextBox ID="txtImportPriceRpt" runat="server" Text='<%#Eval("Product.ImportPrice") %>' Enabled="false"></asp:TextBox></td>
-              <td><asp:TextBox ID="sizeRpt" runat="server" Enabled="false" Text='<%#Eval("Size") %>' ></asp:TextBox></td>
+              <td><asp:Label ID="txtNameRpt" runat="server" Text='<%#Eval("Product.Name") %>' ></asp:Label></td>
+              <td><asp:Label ID="txtImportPriceRpt" runat="server" Text='<%#Eval("Product.ImportPrice") %>' ></asp:Label></td>
+              <td><asp:Label ID="sizeRpt" runat="server" Text='<%#Eval("Size") %>' ></asp:Label></td>
               <td><asp:TextBox ID="txtQuantityRpt" runat="server" Text='<%#Eval("Quantity") %>' Enabled="false"></asp:TextBox></td>
               <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>
                   <asp:Button ID="btnUpdate" class="btn btn-primary" CommandName="update" Visible="false" runat="server" Text="Update"></asp:Button>

@@ -53,5 +53,10 @@ namespace Quanlybanhang.Scripts.Source.Components
             _storeTransactions =  StoreTransactionServices.GetTransactionDuringPeriod(from, to, type);
             return _storeTransactions;
         }
+
+        public StoreTransactionContract GetTransaction(string transactionId)
+        {
+            return StoreTransactionServices.GetTransaction(transactionId);
+        }
     }
 }

@@ -49,5 +49,15 @@ namespace Quanlybanhang.InternalPage.Transaction
             _pagingHelper.FetchData();
             _pagingHelper.CreatePagingControl();
         }
+
+        protected void Transaction_OnItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            Label lbID = (Label)e.Item.FindControl("lblIdRpt");            
+
+            if(e.CommandName.Equals("edit"))
+            {
+                Response.Redirect("Import.aspx?id=" + lbID.Text.ToString());
+            }            
+        }
     }
 }

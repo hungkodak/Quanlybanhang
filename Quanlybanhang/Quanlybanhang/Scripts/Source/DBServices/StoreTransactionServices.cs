@@ -73,6 +73,7 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                         Shippingfee = Int32.Parse(reader[4].ToString()),
                         Discount = float.Parse(reader[5].ToString())
                     };
+                    transaction.Total = transaction.CalculateToTal();
                     return transaction;
                 }
                 return null;
@@ -119,7 +120,8 @@ namespace Quanlybanhang.Scripts.Source.DBServices
                             Shippingfee = Int32.Parse(reader[4].ToString()),
                             Discount = float.Parse(reader[5].ToString())
                         };
-                        storeTransactions.Add(storeTransaction);
+                        storeTransaction.Total = storeTransaction.CalculateToTal();
+                        storeTransactions.Add(storeTransaction);                        
                     }
                 }
                 return storeTransactions;
@@ -156,6 +158,9 @@ namespace Quanlybanhang.Scripts.Source.DBServices
 
         [ProtoMember(6)]
         public float Discount { get; set; }
+
+        [ProtoMember(7)]
+        public long Total { get; set; }
 
         public StoreTransactionContract()
         {
