@@ -50,16 +50,17 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/">Home</a></li>                        
                         <li><a runat="server" href="~/InternalPage/Agency/Agency">Agency</a></li>
                         <li><a runat="server" href="~/InternalPage/Product/Products">Product</a></li>
+                        <li><a runat="server" href="~/InternalPage/Warehouse/Warehouse">WareHouse</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Transaction</a>
                             <div class="dropdown-menu" style="background-color: #222" aria-labelledby="navbarDropdown">
-                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/ManageImport">ManageImport</a><br />                              
-                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/Import">Import</a>                              
+                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/ManageImport">Manage Import</a><br />                              
+                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/Import">Import</a>  <br />
+                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/ManageExport">Manage Export</a><br />                              
+                              <a runat="server" class="dropdown-item" style="color: #9d9d9d; padding:10px 15px;" href="~/InternalPage/Transaction/Export">Export</a><br />
                             </div>
                         </li>
                     </ul>

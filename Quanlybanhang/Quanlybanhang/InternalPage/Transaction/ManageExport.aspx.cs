@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace Quanlybanhang.InternalPage.Transaction
 {
-    public partial class ManageImport : System.Web.UI.Page
+    public partial class ManageExport : System.Web.UI.Page
     {
         protected PagingHelper _pagingHelper;
         protected StoreTransactionComponent _storeTransactionComponent = new StoreTransactionComponent();
@@ -38,7 +38,7 @@ namespace Quanlybanhang.InternalPage.Transaction
             {
                 calendarTo.SelectedDate = DateTime.UtcNow;
                 calendarFrom.SelectedDate = calendarTo.SelectedDate.Add(new TimeSpan(-24, 0, 0));
-                _storeTransactionComponent.GetTransactionDuringPeriod(calendarFrom.SelectedDate, calendarTo.SelectedDate, Scripts.Source.Defination.AgencyRole.Import);
+                _storeTransactionComponent.GetTransactionDuringPeriod(calendarFrom.SelectedDate, calendarTo.SelectedDate, Scripts.Source.Defination.AgencyRole.Export);
                 _pagingHelper.FetchData();
             }
             _pagingHelper.CreatePagingControl();
@@ -46,19 +46,19 @@ namespace Quanlybanhang.InternalPage.Transaction
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            _storeTransactionComponent.GetTransactionDuringPeriod(calendarFrom.SelectedDate, calendarTo.SelectedDate, Scripts.Source.Defination.AgencyRole.Import);
+            _storeTransactionComponent.GetTransactionDuringPeriod(calendarFrom.SelectedDate, calendarTo.SelectedDate, Scripts.Source.Defination.AgencyRole.Export);
             _pagingHelper.FetchData();
             _pagingHelper.CreatePagingControl();
         }
 
         protected void Transaction_OnItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            Label lbID = (Label)e.Item.FindControl("lblIdRpt");            
+            Label lbID = (Label)e.Item.FindControl("lblIdRpt");
 
-            if(e.CommandName.Equals("edit"))
+            if (e.CommandName.Equals("edit"))
             {
-                Response.Redirect("Import.aspx?id=" + lbID.Text.ToString());
-            }            
+                Response.Redirect("Export.aspx?id=" + lbID.Text.ToString());
+            }
         }
     }
 }

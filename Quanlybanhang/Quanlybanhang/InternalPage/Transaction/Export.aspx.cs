@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Quanlybanhang.InternalPage.Transaction
 {
-    public partial class Import : System.Web.UI.Page
+    public partial class Export : System.Web.UI.Page
     {
         protected ProductsComponent _productComponent = new ProductsComponent();
         protected StoreTransactionComponent _storeTransactionComponent = new StoreTransactionComponent();
@@ -71,7 +71,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                     StoreTransactionContract transaction = new StoreTransactionContract();
                     transaction.ID = Guid.NewGuid().ToString();
                     transaction.Name = "";
-                    transaction.Type = AgencyRole.Import;
+                    transaction.Type = AgencyRole.Export;
 
                     ViewState["_currentTransaction"] = transaction;
                 }
@@ -80,14 +80,14 @@ namespace Quanlybanhang.InternalPage.Transaction
             set
             {
                 ViewState["_currentTransaction"] = value;
-            }           
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             lbTransactionID.Text = "Transaction ID:" + _currentTransaction.ID;
             _transactionDetailComponent.Transaction = _currentTransaction;
-            _pagingHelper = new PagingHelper(PagingPlaceHolder, _transactionDetailComponent, ImportRepeater, CurrentPage, SetCurrentPage);
+            _pagingHelper = new PagingHelper(PagingPlaceHolder, _transactionDetailComponent, ExportRepeater, CurrentPage, SetCurrentPage);
             if (!IsPostBack)
             {
                 productSize.DataSource = _productSizeList;
@@ -109,7 +109,7 @@ namespace Quanlybanhang.InternalPage.Transaction
 
         protected void btnAdded_Click(object sender, EventArgs e)
         {
-            if(ValidatorHelper.isBlank(txtAgencyName.Text))
+            if (ValidatorHelper.isBlank(txtAgencyName.Text))
             {
                 MessageHelper.ShowErrorMessage("Agency Name could not be blank.");
                 return;
@@ -138,16 +138,34 @@ namespace Quanlybanhang.InternalPage.Transaction
                 MessageHelper.ShowErrorMessage("Quantity must be higher than zero.");
                 return;
             }
+
+            TransactionDetail wareHouseTransactionDetail = _wareHouseComponent.GetProductFromWareHouseAsTransactionDetail(txtProductID.Text, (ProductSize)Enum.Parse(typeof(ProductSize), productSize.SelectedValue));
+
+            if(wareHouseTransactionDetail == null || wareHouseTransactionDetail.Quantity < Int32.Parse(txtQuantity.Text))
+            {
+                if(wareHouseTransactionDetail == null)
+                {
+                    MessageHelper.ShowErrorMessage(string.Format("This product is not in ware house"));
+                }
+                else
+                {
+                    MessageHelper.ShowErrorMessage(string.Format("Not enough product for export ware house have {0} request {1}.", wareHouseTransactionDetail.Quantity, txtQuantity.Text));
+                }
+                
+                return;
+            }
+
             TransactionDetail item = new TransactionDetail()
             {
                 Product = _productComponent.GetProduct(txtProductID.Text),
                 Size = (ProductSize)Enum.Parse(typeof(ProductSize), productSize.SelectedValue),
-                Quantity = Int32.Parse(txtQuantity.Text)
-            };            
+                Quantity = -Int32.Parse(txtQuantity.Text)
+            };
             _wareHouseComponent.CreateOrUpdateWareHouse(item);
             _currentTransaction.Name = txtAgencyName.Text;
+            item.Quantity *= -1;
             _currentTransaction.TransactionDetail.AddOrUpdateTransaction(item);
-            if(_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
+            if (_storeTransactionComponent.CreateOrUpdateTransaction(_currentTransaction))
             {
                 MessageHelper.ShowSucessMessage("Added Item success.");
                 _pagingHelper.FetchData();
@@ -159,13 +177,12 @@ namespace Quanlybanhang.InternalPage.Transaction
                 MessageHelper.ShowErrorMessage("Added Item failed.");
             }
         }
-        
 
-        protected void ImportRepeater_OnItemCommand(object source, RepeaterCommandEventArgs e)
+        protected void ExportRepeater_OnItemCommand(object source, RepeaterCommandEventArgs e)
         {
             Label lbID = (Label)e.Item.FindControl("lblIdRpt");
             Label txtNameRpt = (Label)e.Item.FindControl("txtNameRpt");
-            Label txtImportPriceRpt = (Label)e.Item.FindControl("txtImportPriceRpt");
+            Label txtImportPriceRpt = (Label)e.Item.FindControl("txtExportPriceRpt");
             TextBox txtQuantityRpt = (TextBox)e.Item.FindControl("txtQuantityRpt");
             Label txtsize = (Label)e.Item.FindControl("sizeRpt");
             Button btnEdit = (Button)e.Item.FindControl("btnEdit");
@@ -193,7 +210,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                 case "update":
 
                     int quantity = 0;
-                    if(!Int32.TryParse(txtQuantityRpt.Text, out quantity))
+                    if (!Int32.TryParse(txtQuantityRpt.Text, out quantity))
                     {
                         MessageHelper.ShowErrorMessage("Quantity must be a number and above zero");
                     }
@@ -209,13 +226,13 @@ namespace Quanlybanhang.InternalPage.Transaction
                         TransactionDetail currentItem = _currentTransaction.TransactionDetail.FindTransaction(item.Product.ID, item.Size);
                         int delta = (int)item.Quantity - (int)currentItem.Quantity;
                         int newQuantity = (int)currentItem.Quantity + delta;
-                        
+
                         if (newQuantity < 0)
                         {
                             MessageHelper.ShowErrorMessage("Don't have enough quantity to change");
                             return;
                         }
-                        item.Quantity = delta;
+                        item.Quantity = -delta;
                         currentItem.Quantity = newQuantity;
 
                         _wareHouseComponent.CreateOrUpdateWareHouse(item);
@@ -237,7 +254,7 @@ namespace Quanlybanhang.InternalPage.Transaction
                         {
                             MessageHelper.ShowErrorMessage("Added Item failed.");
                         }
-                    }                    
+                    }
                     break;
             }
         }
@@ -248,7 +265,8 @@ namespace Quanlybanhang.InternalPage.Transaction
             if (product != null)
             {
                 txtProductName.Text = product.Name;
-            }else
+            }
+            else
             {
                 txtProductName.Text = "";
             }

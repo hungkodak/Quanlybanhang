@@ -14,10 +14,10 @@ namespace Quanlybanhang
         protected void Page_Load(object sender, EventArgs e)
         {
             MessageHelper.SetPlaceHolder(PlaceHolderMessage);
-            //if (!UserComponent.IsUserLogin(this.Page))
-            //{
-            //    Response.Redirect("~/login.aspx");
-            //}
+            if (!UserComponent.IsUserLogin(this.Page))
+            {
+                Response.Redirect("~/login.aspx");
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
 </head>
 <body class="text-center">    
     <div>
-            <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>        
+                
     </div>
     <form class="form-signin" runat="server">
       <img class="mb-4" src="Images/logo.jpg" alt="" width="256" height="256">
@@ -24,6 +24,7 @@
       <asp:Button ID="btnlogin" runat="server" class="btn btn-lg btn-primary btn-block" 
                 Text="Sign In" onclick="btnlogin_Click" 
                  />
+        <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>    
       <p class="mt-5 mb-3 text-muted">&copy; 2018 by Hungkodak</p>
     </form>
 

@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Import.aspx.cs" Inherits="Quanlybanhang.InternalPage.Transaction.Import" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Export.aspx.cs" Inherits="Quanlybanhang.InternalPage.Transaction.Export" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<form>
+    <form>
     <br />
     <div class="form-group">
         <label><asp:Label ID="lbTransactionID" runat="server" Text="TransactionID:"></asp:Label></label>
@@ -15,7 +15,7 @@
                 ID="autoComplete1" 
                 TargetControlID="txtAgencyName"
                 ServicePath="~/Scripts/Source/WebServices/AutoCompleteService.asmx" 
-                ServiceMethod="GetCompletionAgencyImportList"
+                ServiceMethod="GetCompletionAgencyExportList"
                 MinimumPrefixLength="1" 
                 CompletionInterval="100"
                 EnableCaching="true"
@@ -62,13 +62,13 @@
 </form>
 
 <table class="table">
-    <asp:Repeater ID="ImportRepeater" runat="server" onitemcommand="ImportRepeater_OnItemCommand" >
+    <asp:Repeater ID="ExportRepeater" runat="server" onitemcommand="ExportRepeater_OnItemCommand">
         <HeaderTemplate>
           <thead >
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Import Price</th>
+              <th scope="col">Export Price</th>
               <th scope="col">Size</th>
               <th scope="col">Quantity</th>
             </tr>
@@ -78,7 +78,7 @@
             <tr>
               <th scope="row"><asp:Label ID="lblIdRpt" runat="server" Text='<%#Eval("Product.ID") %>' /></th>
               <td><asp:Label ID="txtNameRpt" runat="server" Text='<%#Eval("Product.Name") %>' ></asp:Label></td>
-              <td><asp:Label ID="txtImportPriceRpt" runat="server" Text='<%#Eval("Product.ImportPrice") %>' ></asp:Label></td>
+              <td><asp:Label ID="txtExportPriceRpt" runat="server" Text='<%#Eval("Product.ExportPrice") %>' ></asp:Label></td>
               <td><asp:Label ID="sizeRpt" runat="server" Text='<%#Eval("Size") %>' ></asp:Label></td>
               <td><asp:TextBox ID="txtQuantityRpt" runat="server" Text='<%#Eval("Quantity") %>' Enabled="false"></asp:TextBox></td>
               <td><asp:Button ID="btnEdit" class="btn btn-primary" CommandName="edit" Visible="true" runat="server" Text="Edit"></asp:Button>

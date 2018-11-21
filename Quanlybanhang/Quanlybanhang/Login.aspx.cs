@@ -36,7 +36,7 @@ namespace Quanlybanhang
             }
             else
             {
-                ValidatorHelper.showErrorMessage(PlaceHolder1, "Tài khoản hoặc mật khẩu không chính xác");
+                ValidatorHelper.showErrorMessage(PlaceHolder1, "Username or password is incorrect");
             }            
         }
     }
